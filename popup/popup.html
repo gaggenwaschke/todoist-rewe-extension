@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todoist REWE Integration</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛒 Todoist → REWE</h1>
+            <p>Sync your shopping lists seamlessly</p>
+        </header>
+
+        <main>
+            <!-- Authentication Section -->
+            <div id="auth-section" class="section">
+                <div id="auth-status" class="auth-status">
+                    <span id="auth-indicator" class="status-indicator">⚠️</span>
+                    <span id="auth-text">Not authenticated</span>
+                </div>
+                <button id="auth-button" class="primary-button">Connect to Todoist</button>
+            </div>
+
+            <!-- Configuration Section -->
+            <div id="config-section" class="section hidden">
+                <h3>📋 Select Shopping List</h3>
+                
+                <div class="form-group">
+                    <label for="project-select">Project:</label>
+                    <select id="project-select" class="select-input">
+                        <option value="">Loading projects...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="section-select">List/Section:</label>
+                    <select id="section-select" class="select-input">
+                        <option value="">Select a project first</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="tag-input">Tag Filter:</label>
+                    <input type="text" id="tag-input" class="text-input" placeholder="e.g., @shopping">
+                    <small class="help-text">Filter tasks by tag (optional)</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="preview-list">Tasks to Transfer:</label>
+                    <div id="preview-list" class="preview-list">
+                        <div class="loading">Select options above to preview tasks</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transfer Section -->
+            <div id="transfer-section" class="section hidden">
+                <button id="transfer-button" class="primary-button">
+                    <span id="transfer-text">🎯 Start Interactive Transfer</span>
+                    <span id="transfer-loading" class="loading-spinner hidden">⏳</span>
+                </button>
+            </div>
+
+            <!-- Interactive Transfer Section -->
+            <div id="interactive-section" class="section hidden">
+                <div id="progress-header">
+                    <h3 id="progress-title">Processing Item 1 of 5</h3>
+                    <div id="progress-bar">
+                        <div id="progress-fill"></div>
+                    </div>
+                </div>
+
+                <div id="current-task">
+                    <h4 id="task-name">Task Name</h4>
+                    <div id="search-refine">
+                        <label for="search-term">Inferred search term:</label>
+                        <input type="text" id="search-term" class="text-input" placeholder="Automatically inferred from task" readonly>
+                    </div>
+                </div>
+
+                <div id="product-results">
+                    <h4>Shopping Instructions:</h4>
+                    <div id="products-list" class="products-list">
+                        <div class="loading">Searching for products...</div>
+                    </div>
+                    
+                    <div id="rewe-controls" class="rewe-controls hidden">
+                        <div class="rewe-instructions">
+                            <p>🛒 <strong>Search and add this item to your REWE cart:</strong></p>
+                            <p id="search-instructions">Search for "Item Name" on the REWE website</p>
+                        </div>
+                        
+                        <div class="rewe-actions">
+                            <button id="open-rewe" class="primary-button">🔍 Open REWE Search</button>
+                            <button id="added-to-cart" class="success-button">✓ Added to Cart</button>
+                            <button id="skip-item" class="secondary-button">Skip Item</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="interactive-actions">
+                    <button id="finish-button" class="primary-button hidden">Finish Transfer</button>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="results-section" class="section hidden">
+                <h3>📊 Transfer Results</h3>
+                
+                <div id="success-results" class="results-group hidden">
+                    <h4 class="success-header">✅ Successfully Added</h4>
+                    <div id="success-list" class="results-list"></div>
+                </div>
+
+                <div id="failed-results" class="results-group hidden">
+                    <h4 class="error-header">❌ Failed to Add</h4>
+                    <div id="failed-list" class="results-list"></div>
+                </div>
+
+                <div id="ambiguous-results" class="results-group hidden">
+                    <h4 class="warning-header">🤔 Need Your Decision</h4>
+                    <div id="ambiguous-list" class="results-list"></div>
+                </div>
+
+                <div class="results-actions">
+                    <button id="new-transfer-button" class="secondary-button">New Transfer</button>
+                    <button id="open-rewe-button" class="primary-button">Open REWE Cart</button>
+                </div>
+            </div>
+
+            <!-- Disambiguation Modal -->
+            <div id="disambiguation-modal" class="modal hidden">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>🔍 Choose Product</h3>
+                        <button id="close-modal" class="close-button">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="disambiguation-question"></p>
+                        <div id="product-options" class="product-options"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="skip-product" class="secondary-button">Skip This Item</button>
+                        <button id="save-choice" class="primary-button">Save Choice</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-links">
+                <a href="#" id="settings-link">⚙️ Settings</a>
+                <a href="#" id="help-link">❓ Help</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Overlay for modal -->
+    <div id="modal-overlay" class="modal-overlay hidden"></div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

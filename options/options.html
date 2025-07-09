@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todoist REWE Integration - Settings</title>
+    <link rel="stylesheet" href="options.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛒 Todoist REWE Integration</h1>
+            <p>Settings & Configuration</p>
+        </header>
+
+        <main>
+            <section class="settings-section">
+                <h2>🔐 Authentication</h2>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label for="api-token">Todoist API Token</label>
+                        <input type="password" id="api-token" class="text-input" placeholder="Enter your Todoist API token">
+                    </div>
+                </div>
+                <div class="setting-description">
+                    <p>Get your API token from <a href="https://todoist.com/prefs/integrations" target="_blank">Todoist Settings → Integrations</a>. Scroll down to find your API token and copy it here.</p>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label>Todoist Connection Status</label>
+                        <div id="auth-status" class="auth-status">
+                            <span id="auth-indicator" class="status-indicator">⚠️</span>
+                            <span id="auth-text">Checking connection...</span>
+                        </div>
+                    </div>
+                    <div class="setting-actions">
+                        <button id="auth-button" class="primary-button">Test Connection</button>
+                        <button id="disconnect-button" class="secondary-button hidden">Disconnect</button>
+                    </div>
+                </div>
+                <div class="setting-description">
+                    <p>Your API token is stored securely in Chrome's encrypted storage and used to access your Todoist projects and tasks.</p>
+                </div>
+            </section>
+
+            <section class="settings-section">
+                <h2>⚙️ Search & Matching</h2>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label for="similarity-threshold">Similarity Threshold</label>
+                        <input type="range" id="similarity-threshold" class="range-input" min="0.1" max="1.0" step="0.1" value="0.7">
+                        <span id="similarity-value" class="range-value">70%</span>
+                    </div>
+                </div>
+                <div class="setting-description">
+                    <p>Minimum similarity score required for automatic product matching. Lower values allow more flexible matching but may result in less accurate results.</p>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label for="max-search-results">Maximum Search Results</label>
+                        <input type="number" id="max-search-results" class="number-input" min="1" max="20" value="5">
+                    </div>
+                </div>
+                <div class="setting-description">
+                    <p>Maximum number of product options to show when multiple matches are found.</p>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="fuzzy-matching" checked>
+                            <span class="checkbox-custom"></span>
+                            Enable Fuzzy Matching
+                        </label>
+                    </div>
+                </div>
+                <div class="setting-description">
+                    <p>Use advanced fuzzy matching algorithms to find products even when task names don't exactly match product names.</p>
+                </div>
+            </section>
+
+            <section class="settings-section">
+                <h2>🛍️ Shopping Preferences</h2>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="auto-open-cart" checked>
+                            <span class="checkbox-custom"></span>
+                            Auto-open REWE Cart
+                        </label>
+                    </div>
+                </div>
+                <div class="setting-description">
+                    <p>Automatically open the REWE shopping cart after successful transfers.</p>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="show-notifications" checked>
+                            <span class="checkbox-custom"></span>
+                            Show Notifications
+                        </label>
+                    </div>
+                </div>
+                <div class="setting-description">
+                    <p>Display browser notifications for transfer results and important updates.</p>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label for="default-tag">Default Tag Filter</label>
+                        <input type="text" id="default-tag" class="text-input" placeholder="e.g., @shopping">
+                    </div>
+                </div>
+                <div class="setting-description">
+                    <p>Default tag to use for filtering tasks. Leave empty to show all tasks by default.</p>
+                </div>
+            </section>
+
+            <section class="settings-section">
+                <h2>🗂️ Data Management</h2>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label>Product Mappings</label>
+                        <div id="mappings-count" class="info-text">Loading...</div>
+                    </div>
+                    <div class="setting-actions">
+                        <button id="view-mappings" class="secondary-button">View Mappings</button>
+                        <button id="clear-mappings" class="danger-button">Clear All</button>
+                    </div>
+                </div>
+                <div class="setting-description">
+                    <p>Manage saved product mappings. These help the extension remember your product choices for faster future transfers.</p>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label>Export/Import Settings</label>
+                        <div class="info-text">Backup your configuration and product mappings</div>
+                    </div>
+                    <div class="setting-actions">
+                        <button id="export-settings" class="secondary-button">Export</button>
+                        <button id="import-settings" class="secondary-button">Import</button>
+                    </div>
+                </div>
+                <div class="setting-description">
+                    <p>Export your settings and product mappings to a file, or import them from a previously exported file.</p>
+                </div>
+            </section>
+
+            <section class="settings-section">
+                <h2>ℹ️ About</h2>
+                <div class="about-info">
+                    <h3>Todoist REWE Integration</h3>
+                    <p><strong>Version:</strong> 1.0.0</p>
+                    <p><strong>Description:</strong> Seamlessly sync your Todoist shopping lists with REWE online shop</p>
+                    <p><strong>Features:</strong></p>
+                    <ul>
+                        <li>OAuth 2.0 authentication with Todoist</li>
+                        <li>Intelligent product matching with fuzzy search</li>
+                        <li>Automatic cart management</li>
+                        <li>Saved product mappings for faster future transfers</li>
+                        <li>Customizable similarity thresholds</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="footer-actions">
+                <button id="save-settings" class="primary-button">Save Settings</button>
+                <button id="reset-settings" class="secondary-button">Reset to Defaults</button>
+            </div>
+            <div class="footer-info">
+                <p>Changes are saved automatically. <span id="save-status" class="save-status"></span></p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Mappings Modal -->
+    <div id="mappings-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📝 Product Mappings</h3>
+                <button id="close-mappings-modal" class="close-button">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="mappings-list" class="mappings-list">
+                    <div class="loading">Loading mappings...</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="close-mappings" class="secondary-button">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay for modal -->
+    <div id="modal-overlay" class="modal-overlay hidden"></div>
+
+    <!-- Hidden file input for import -->
+    <input type="file" id="import-file" accept=".json" style="display: none;">
+
+    <script src="options.js"></script>
+</body>
+</html>

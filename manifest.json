@@ -1,0 +1,63 @@
+{
+    "manifest_version": 3,
+    "name": "Todoist REWE Integration",
+    "version": "1.0.0",
+    "description": "Sync your Todoist shopping lists with REWE online shop",
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "todoist-rewe-integration@example.com"
+        }
+    },
+    "permissions": [
+        "storage",
+        "activeTab",
+        "https://api.todoist.com/*",
+        "https://shop.rewe.de/*"
+    ],
+    "host_permissions": [
+        "https://api.todoist.com/*",
+        "https://shop.rewe.de/*"
+    ],
+    "background": {
+        "scripts": [
+            "background.js"
+        ],
+        "persistent": false
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://shop.rewe.de/*"
+            ],
+            "js": [
+                "content/rewe-content.js"
+            ]
+        }
+    ],
+    "action": {
+        "default_icon": {
+            "16": "icons/icon-16.png.placeholder",
+            "48": "icons/icon-48.png.placeholder",
+            "128": "icons/icon-128.png.placeholder"
+        }
+    },
+    "options_ui": {
+        "page": "options/options.html",
+        "open_in_tab": false
+    },
+    "icons": {
+        "16": "icons/icon-16.png.placeholder",
+        "48": "icons/icon-48.png.placeholder",
+        "128": "icons/icon-128.png.placeholder"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "lib/*"
+            ],
+            "matches": [
+                "https://shop.rewe.de/*"
+            ]
+        }
+    ]
+}
